@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const AddCar = () => {
   let years = [];
 
-  for(let i = 1990; i <= 2018; i++) {
+  for (let i = 1990; i <= 2018; i++) {
     years.push(i);
   }
 
@@ -16,31 +16,43 @@ const AddCar = () => {
     maxSpeed: 0,
     isAutomatic: false,
     engine: "",
-    numberOfDoors: 0
+    numberOfDoors: 0,
   });
 
   const handleInputChange = (event) => {
+    console.log(event.target.checked);
     const { name, value } = event.target;
     setState((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleAdd = (event, state) => {
     event.preventDefault();
-    postCars(state.brand, state.model, state.year, state.maxSpeed, state.isAutomatic, state.engine, state.numberOfDoors);
+    console.log(state.isAutomatic);
+    postCars(
+      state.brand,
+      state.model,
+      state.year,
+      state.maxSpeed,
+      state.isAutomatic,
+      state.engine,
+      state.numberOfDoors
+    );
 
-    setState({brand: "",
-    model: "",
-    year: 0,
-    maxSpeed: 0,
-    isAutomatic: "",
-    engine: "",
-    numberOfDoors: 0})
-  }
+    setState({
+      brand: "",
+      model: "",
+      year: 0,
+      maxSpeed: 0,
+      isAutomatic: false,
+      engine: "",
+      numberOfDoors: 0,
+    });
+  };
 
-  return  (
+  return (
     <form
       className="container mt-5"
       style={{ width: "300px" }}
@@ -71,11 +83,21 @@ const AddCar = () => {
         <label>Model</label>
       </div>
       <div className="form-floating mt-3">
-        <select className="form-control input"  name="year" onChange={handleInputChange}>
-          <option disabled selected value>Select year:</option>
-            {years.map((year, index) => {
-              return <option key={index} value={year}>{year}</option>
-            })}
+        <select
+          className="form-control input"
+          name="year"
+          onChange={handleInputChange}
+        >
+          <option disabled defaultValue value>
+            Select year:
+          </option>
+          {years.map((year, index) => {
+            return (
+              <option key={index} value={year}>
+                {year}
+              </option>
+            );
+          })}
         </select>
         {/* <input
           name="year"
@@ -98,9 +120,19 @@ const AddCar = () => {
         />
         <label>Max Speed</label>
       </div>
-      <div className="form-floating mt-3">
-      <input className="form-control" type="checkbox" onChange={handleInputChange} name="isAutomatic" value={state.isAutomatic}/>
-      <label for="isAutomatic"> Is Automatic</label>
+      <div className="form-check mt-3">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          onChange={handleInputChange}
+          name="isAutomatic"
+          value={state.isAutomatic}
+          placeholder="is automatic"
+        />
+        <label className="form-check-label" for="isAutomatic">
+          {" "}
+          Is Automatic
+        </label>
         {/* <input
           name="isAutomatic"
           value={state.isAutomatic}
@@ -137,7 +169,7 @@ const AddCar = () => {
         Add
       </button>
     </form>
-  )
-}
+  );
+};
 
 export default AddCar;
