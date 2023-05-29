@@ -3,6 +3,8 @@ import { API } from './shared/api';
 import { Route, Routes } from "react-router-dom";
 import AppCars from './components/AppCars';
 import Add from './pages/Add';
+import Edit from './pages/Edit';
+import Welcome from './components/Welcome';
 
 function App() {
   // API.get("Messages/greet").then((response) => console.log(response.data.greeting));
@@ -10,8 +12,10 @@ function App() {
 
   return (
     <Routes>
-      <Route index element={<AppCars />}></Route>
-      <Route path="/add" element={<Add />}></Route>
+      <Route index element={<Welcome />}></Route>
+      <Route path="/cars" element={<AppCars />}></Route>
+      <Route path="/add/" element={<Add />}></Route>
+      <Route path="/edit/:id" element={<Edit />}></Route>
     </Routes>
   );
 }
