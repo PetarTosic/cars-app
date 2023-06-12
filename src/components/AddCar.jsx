@@ -2,26 +2,13 @@ import { useEffect, useState } from "react";
 import { editCars, getCar, postCars } from "../service/carsService";
 import { Link, useNavigate } from "react-router-dom";
 
+let years = [];
+
+for (let i = 1990; i <= 2018; i++) {
+  years.push(i);
+}
+
 const AddCar = ({index}) => {
-  useEffect(() => {
-    if(index != undefined) {
-      getCar(index).then(({data}) => setState(data));
-    }
-  }, []);
-  let navigate = useNavigate();
-
-  
-  let years = [];
-
-  let placeholder = 'Add';
-  if(index != undefined) {
-    placeholder = 'Edit';
-  }
-
-  for (let i = 1990; i <= 2018; i++) {
-    years.push(i);
-  }
-
   const [state, setState] = useState({
     brand: "",
     model: "",
@@ -31,6 +18,18 @@ const AddCar = ({index}) => {
     engine: "",
     numberOfDoors: 0,
   });
+
+  useEffect(() => {
+    if(index != undefined) {
+      getCar(index).then(({data}) => setState(data));
+    }
+  }, []);
+  let navigate = useNavigate();
+
+  let placeholder = 'Add';
+  if(index != undefined) {
+    placeholder = 'Edit';
+  }
 
   const handleInputBool = (event) => {
 
